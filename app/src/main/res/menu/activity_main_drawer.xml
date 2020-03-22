@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/menu_gallery" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/menu_slideshow" />
+        <item
+            android:id="@+id/nav_logout"
+            android:title="Sign Out"/>
+    </group>
+<!--    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/home"
+            android:icon="@drawable/ic_school_black_24dp"
+            android:title="Home" />
+        <item
+            android:id="@+id/timeTable"
+            android:icon="@drawable/ic_chrome_reader_mode_black_24dp"
+            android:title="Time Table" />
+        <item
+            android:id="@+id/examSchedule"
+            android:icon="@drawable/ic_schedule_black_24dp"
+            android:title="Exam Schedule" />
+        <item
+            android:id="@+id/attendence"
+            android:icon="@drawable/ic_assessment_black_24dp"
+            android:title="Attendence" />
+        <item
+            android:id="@+id/result"
+            android:icon="@drawable/ic_timeline_black_24dp"
+            android:title="Results" />
+    </group>
+    <item android:title="Social">
+        <menu>
+            <item
+                android:id="@+id/fb"
+                android:icon="@drawable/facebook"
+                android:title="Faacebook" />
+            <item
+                android:id="@+id/gplus"
+                android:icon="@drawable/googleplus"
+                android:title="Google +" />
+            <item
+                android:id="@+id/twitter"
+                android:icon="@drawable/twitter"
+                android:title="Twitter" />
+            <item
+                android:id="@+id/youtube"
+                android:icon="@drawable/youtube"
+                android:title="Youtube" />
+            <item
+                android:id="@+id/github"
+                android:icon="@drawable/github"
+                android:title="Github" />
+        </menu>
+    </item>-->
+</menu>
