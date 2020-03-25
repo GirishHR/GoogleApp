@@ -7,7 +7,7 @@
     android:background="@drawable/registration_background"
     tools:context=".Register">
 
-    <TextView
+<!--    <TextView
         android:id="@+id/appName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,13 +21,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.22000003" />
+        app:layout_constraintVertical_bias="0.22000003" />-->
 
     <TextView
         android:id="@+id/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
         android:fontFamily="cursive"
         android:text="Register to Start  "
         android:textColor="#0E0E0E"
@@ -51,6 +53,9 @@
         android:fontFamily="cursive"
         android:gravity="center_horizontal"
         android:hint="Full Name"
+        android:drawableStart="@drawable/ic_person_black_24dp"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:drawablePadding="5dp"
         android:inputType="textPersonName"
         android:padding="10dp"
         android:textColor="#FFFFFF"
@@ -74,6 +79,9 @@
         android:fontFamily="cursive"
         android:gravity="center_horizontal"
         android:hint="Email"
+        android:drawableStart="@drawable/ic_email_black_24dp"
+        android:drawableLeft="@drawable/ic_email_black_24dp"
+        android:drawablePadding="5dp"
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="#FFFFFF"
@@ -98,6 +106,9 @@
         android:fontFamily="cursive"
         android:gravity="center_horizontal"
         android:hint="Enter Password"
+        android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+        android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+        android:drawablePadding="5dp"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="#FFFFFF"
@@ -121,6 +132,9 @@
         android:fontFamily="cursive"
         android:gravity="center_horizontal"
         android:hint="Confirm Password"
+        android:drawableStart="@drawable/ic_lock_outline_black_24dp"
+        android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
+        android:drawablePadding="5dp"
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="#FFFFFF"
@@ -180,10 +194,24 @@
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:visibility="invisible"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="#808080"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginText"
         app:layout_constraintVertical_bias="0.19999999" />
+
+    <ImageView
+        android:id="@+id/appName"
+        android:layout_width="233dp"
+        android:layout_height="208dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.100000024"
+        app:srcCompat="@drawable/updated_login_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

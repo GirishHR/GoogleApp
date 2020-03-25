@@ -4,11 +4,11 @@
     android:layout_height="match_parent">
 
     <stroke android:width="2dp"
-        android:color="#FFFFFF"/>
+        android:color="#808080"/>
     <gradient
         android:angle="225"
-        android:startColor="#DD2ECCFA"
-        android:endColor="#DD000000"/>
+        android:startColor="#D3D3D3"
+        android:endColor="#696969"/>
     <corners
         android:bottomLeftRadius="50dp"
         android:bottomRightRadius="50dp"

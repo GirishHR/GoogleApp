@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 
+
 import com.example.googleapp.ui.gallery.GalleryFragment;
 import com.example.googleapp.ui.home.HomeFragment;
 import com.example.googleapp.ui.slideshow.SlideshowFragment;
@@ -30,6 +31,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+
 public class MainActivity extends AppCompatActivity implements  NavigationView.OnNavigationItemSelectedListener{
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -37,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     FirebaseAuth fAuth;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    private long backPressedTime;
+    private Toast backToast;
+    Fragment fragment = null;
 
     public void logout() {
         FirebaseAuth.getInstance().signOut();//logout
@@ -78,10 +83,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_logout)
                 .setDrawerLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);*/
+                .build(); */
+/*        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         //add this line to display menu1 when the activity is loaded
         displaySelectedScreen(R.id.nav_home);
+
     }
 
     @Override
@@ -103,14 +108,14 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         return true;
     }
 
- /*   @Override
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
-    }*/
+    }
 
-    @Override
+/*    @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -118,8 +123,50 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         } else {
             super.onBackPressed();
         }
+    }*/
+@Override
+/*public void onBackPressed() {
+    if (getFragmentManager().getBackStackEntryCount() > 0) {
+        getFragmentManager().popBackStack();
+    } else {
+        finish();
+    }
+}*/
+    public void onBackPressed()
+    {
+        FragmentManager fm = this.getSupportFragmentManager();
+      if (fm.getBackStackEntryCount()> 0) {
+
+  /*          count=fm.getBackStackEntryCount();*/
+            fm.popBackStack();
+      }
+      else {
+          if (backPressedTime + 2000 > System.currentTimeMillis()) {
+              backToast.cancel();
+              finish();
+          } else {
+              backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+              backToast.show();
+          }
+          backPressedTime = System.currentTimeMillis();
+      }
     }
 
+ /*   @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            finishAffinity();
+            finish();
+ *//*           super.onBackPressed();
+            return;*//*
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
+    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -139,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
     private void displaySelectedScreen(int itemId) {
 
         //creating fragment object
-        Fragment fragment = null;
+     /*   Fragment fragment = null;*/
 
         //initializing the fragment object which is selected
         switch (itemId) {
@@ -153,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                 fragment = new GalleryFragment();
                 break;
             case R.id.nav_logout:
+                fragment=null;
                 logout();
                 break;
         }
@@ -161,6 +209,9 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.nav_host_fragment, fragment);
+            ft.addToBackStack(null);
+         /*   String j=fragment.getClass().getName();        //to get the name of fragment being added
+            count = getFragmentManager().getBackStackEntryCount();*/
             ft.commit();
         }
 

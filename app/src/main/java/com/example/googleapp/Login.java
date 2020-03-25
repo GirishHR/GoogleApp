@@ -32,6 +32,8 @@ public class Login extends AppCompatActivity {
     TextView mCreateBtn,mForgotBtn;
     ProgressBar progressBar;
     FirebaseAuth fAuth;
+    private long backPressedTime;
+    private Toast backToast;
 
 
     @Override
@@ -78,6 +80,7 @@ public class Login extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Toast.makeText(Login.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            finish();
                             progressBar.setVisibility(View.GONE);
                         }else {
                             Toast.makeText(Login.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -137,5 +140,21 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            finishAffinity();
+            finish();
+ /*           super.onBackPressed();
+            return;*/
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }

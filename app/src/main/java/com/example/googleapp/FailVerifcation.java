@@ -21,6 +21,8 @@ public class FailVerifcation extends AppCompatActivity {
     FirebaseAuth fAuth;
     Button mVerifyBtn;
     TextView mFailMsg,mCreateBtn;
+    private long backPressedTime;
+    private Toast backToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,5 +65,20 @@ public class FailVerifcation extends AppCompatActivity {
         });
 
 
+    }
+    @Override
+    public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            finishAffinity();
+            finish();
+ /*           super.onBackPressed();
+            return;*/
+        } else {
+            backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+
+        backPressedTime = System.currentTimeMillis();
     }
 }
