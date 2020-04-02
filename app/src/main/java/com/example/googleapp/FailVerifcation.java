@@ -60,7 +60,8 @@ public class FailVerifcation extends AppCompatActivity {
         mCreateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Login.class));
+               logout();
+
             }
         });
 
@@ -80,5 +81,11 @@ public class FailVerifcation extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();//logout
+        /*  finish()*/;
+
+        startActivity(new Intent(getApplicationContext(),Login.class));
     }
 }

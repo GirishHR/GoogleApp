@@ -5,12 +5,19 @@
     <string name="nav_header_title">FORTRON</string>
     <string name="nav_header_subtitle">fortronteam@outlook.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Safe Locator</string>
     <string name="password_failed">You will never break into this device!</string>
+    <string name="alert">No Internet Connection</string>
+    <string name="dismiss">exit</string>
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="device_admin_explanation">For experimentation purposes only</string>
+
+    <string name="compliant">Your password is compliant!</string>
+    <string name="not_compliant">Your password is not sufficient to proceed Safe Locator.Please change your password and try again.</string>
 
     <string name="home_second">Home Second</string>
+    <string name="password_success">Congratulations!</string>
 </resources>

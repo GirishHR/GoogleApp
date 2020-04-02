@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/abhaya_libre_extrabold</item>
         <item>@font/aclonica</item>
         <item>@font/aladin</item>
         <item>@font/almendra_sc</item>
+        <item>@font/averia_serif_libre_bold_italic</item>
+        <item>@font/averia_serif_libre_italic</item>
         <item>@font/bilbo_swash_caps</item>
         <item>@font/condiment</item>
+        <item>@font/david_libre_bold</item>
         <item>@font/great_vibes</item>
         <item>@font/homemade_apple</item>
     </array>

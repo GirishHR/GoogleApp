@@ -1,5 +1,7 @@
 package com.example.googleapp;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
                         .setAction("Action", null).show();
             }
         });
+
 /*        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -98,6 +101,38 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         //add this line to display menu1 when the activity is loaded
         displaySelectedScreen(R.id.nav_home);
+
+        ComponentName cn=new ComponentName(this, AdminReceiver.class);
+        DevicePolicyManager mgr=
+                (DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
+
+        if (mgr.isAdminActive(cn)) {
+            int msgId;
+
+            if (mgr.isActivePasswordSufficient()) {
+                int i=2;
+                msgId=R.string.compliant;
+            }
+            else {
+                msgId=R.string.not_compliant;
+            }
+
+            Toast.makeText(this, msgId, Toast.LENGTH_LONG).show();
+        }
+        else {
+            Intent intent=
+                    new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, cn);
+            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                    getString(R.string.device_admin_explanation));
+            startActivity(intent);
+        }
+
+       // on button click
+
+        /*DevicePolicyManager mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
+        mDPM.removeActiveAdmin(mDeviceAdminReceiver);
+       */
 
     }
 
@@ -137,12 +172,13 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         FragmentManager fm = this.getSupportFragmentManager();
       if (fm.getBackStackEntryCount()> 0) {
 
-  /*          count=fm.getBackStackEntryCount();*/
+   int count=fm.getBackStackEntryCount();
             fm.popBackStack();
       }
       else {
           if (backPressedTime + 2000 > System.currentTimeMillis()) {
               backToast.cancel();
+              finishAffinity();
               finish();
           } else {
               backToast = Toast.makeText(getBaseContext(), "Press back again to exit", Toast.LENGTH_SHORT);
@@ -175,7 +211,10 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.actionsettings) {
+/*            Snackbar.make(findViewById(android.R.id.content), "Replace with your own action", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();*/
+            startActivity(new Intent(getApplicationContext(),device_admin.class));
             return true;
         }
 

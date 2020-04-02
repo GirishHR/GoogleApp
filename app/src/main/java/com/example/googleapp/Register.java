@@ -1,9 +1,14 @@
 package com.example.googleapp;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +24,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -32,6 +38,8 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
     private long backPressedTime;
     private Toast backToast;
+    String alertmessage="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,40 +55,64 @@ public class Register extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressBar3);
 
-        if(fAuth.getCurrentUser() != null){
+/*        if(fAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
-        }
+        }*/
 
         mRegisterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!isConnected(Register.this)) {
+                    buildDialog(Register.this).show();
+                }
+                else
+                    {
                 final String email = mEmail.getText().toString().trim();
                 String confirmedpassword = mPassword.getText().toString().trim();
-                String newPasswd= newPassword.getText().toString().trim();
+                String newPasswd = newPassword.getText().toString().trim();
+                final String fullName= mFullName.getText().toString().trim();
 
-                if(TextUtils.isEmpty(email)){
-                    mEmail.setError("Email is Required.");
-                }
 
-                if(TextUtils.isEmpty(newPasswd)){
-                    newPassword.setError("Password is Required.");
+                if (TextUtils.isEmpty(fullName)) {
+
+                    /* mEmail.setError("Email is Required.");*/
+                    Snackbar.make(findViewById(android.R.id.content), "Please Enter Your Name", Snackbar.LENGTH_LONG)
+                                  .setAction("Action", null).show();
                     return;
                 }
 
-                if(TextUtils.isEmpty(confirmedpassword)){
-                    mPassword.setError("Password is Required.");
+                if (TextUtils.isEmpty(email)) {
+                   /* mEmail.setError("Email is Required.");*/
+                    Snackbar.make(findViewById(android.R.id.content), "Email is Required", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                     return;
                 }
 
-                if(confirmedpassword.length() < 6){
-                    mPassword.setError("Password Must be >= 6 Characters");
+                if (TextUtils.isEmpty(newPasswd)) {
+                    Snackbar.make(findViewById(android.R.id.content), "Password is Required", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                     return;
                 }
 
-                if(newPasswd.compareTo(confirmedpassword) != 0 ){
-                    newPassword.setError("New Password and Confirmed Password must match.");
-                    mPassword.setError("New Password and Confirmed Password must match.");
+                if (TextUtils.isEmpty(confirmedpassword)) {
+                   /* mPassword.setError("Password is Required.");*/
+                    Snackbar.make(findViewById(android.R.id.content), "Confirmation Password is Required", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
+                if (confirmedpassword.length() < 6) {
+                   /* mPassword.setError("Password Must be >= 6 Characters");*/
+                    Snackbar.make(findViewById(android.R.id.content), "Password Must be atleast 6 Characters", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                    return;
+                }
+
+                if (newPasswd.compareTo(confirmedpassword) != 0) {
+                    Snackbar.make(findViewById(android.R.id.content), "Both the Passwords must Match", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
                     return;
                 }
 
@@ -88,12 +120,12 @@ public class Register extends AppCompatActivity {
 
                 //register the user in Firebase
 
-                fAuth.createUserWithEmailAndPassword(email,confirmedpassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(email, confirmedpassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
 
-                            FirebaseUser user= fAuth.getCurrentUser();
+                            FirebaseUser user = fAuth.getCurrentUser();
                             user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -102,25 +134,19 @@ public class Register extends AppCompatActivity {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Log.d("TAG","Email Not Sent "+e.getMessage());
+                                    Log.d("TAG", "Email Not Sent " + e.getMessage());
                                 }
                             });
 
-                            final Toast toast = Toast.makeText(Register.this, "Registration Successful. Please Verify The Link Sent To Registered Email and Login", Toast.LENGTH_LONG);
-                            toast.show();
-                            new android.os.Handler().postDelayed(
-                                    new Runnable() {
-                                        public void run() {
-                                            toast.cancel();
-                                            startActivity(new Intent(getApplicationContext(),Login.class));
-                                            progressBar.setVisibility(View.GONE);
-                                        }
-                                    }, 4500);
+                            /*final Toast toast = Toast.makeText(Register.this, "Registration Successful. Please Verify The Link Sent To Registered Email and Login", Toast.LENGTH_LONG);
+                            toast.show();*/
+                            alertmessage="verificationsuccess";
+                            buildDialog(Register.this).show();
+                            progressBar.setVisibility(View.GONE);
 
-                        }
-                        else{
-                                Toast.makeText(Register.this,"Error!"+ task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-                                progressBar.setVisibility(View.GONE);
+                        } else {
+                            Toast.makeText(Register.this, "Error!" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
 
 
                         }
@@ -129,11 +155,12 @@ public class Register extends AppCompatActivity {
 
 
             }
+        }
         });
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),Login.class));
+                logout();
             }
         });
     }
@@ -152,5 +179,58 @@ public class Register extends AppCompatActivity {
         }
 
         backPressedTime = System.currentTimeMillis();
+    }
+    public boolean isConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting())) return true;
+            else return false;
+        } else
+            return false;
+    }
+
+    public AlertDialog.Builder buildDialog(Context c) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        if(alertmessage.equals("verificationsuccess")){
+            builder.setTitle("Thank You For Registering");
+            builder.setMessage("A verification email has been sent to your registered email. Please verify.");
+        }
+        else{
+        builder.setTitle("No Internet Connection");
+        builder.setMessage("Kindly Verify Your Internet Connection.");
+
+        }
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                /* startActivity(new Intent(getApplicationContext(),Login.class));
+                 *//*finish();*/if(alertmessage.equals("verificationsuccess")){
+                    logout();
+
+                }
+                else{
+                    startActivity(new Intent(getApplicationContext(), Login.class));
+                }
+
+
+            }
+        });
+
+        return builder;
+    }
+    public void logout() {
+        FirebaseAuth.getInstance().signOut();//logout
+      /*  finish()*/;
+
+        startActivity(new Intent(getApplicationContext(),Login.class));
     }
 }
