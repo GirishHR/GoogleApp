@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
 
         //add this line to display menu1 when the activity is loaded
         displaySelectedScreen(R.id.nav_home);
-
+/*
         ComponentName cn=new ComponentName(this, AdminReceiver.class);
         DevicePolicyManager mgr=
                 (DevicePolicyManager)getSystemService(DEVICE_POLICY_SERVICE);
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements  NavigationView.O
             intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,
                     getString(R.string.device_admin_explanation));
             startActivity(intent);
-        }
+        }*/
 
        // on button click
 
