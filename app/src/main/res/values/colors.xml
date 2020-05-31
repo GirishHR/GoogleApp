@@ -4,7 +4,10 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorblack">#000000</color>
-
+    <color name="navy">#000080</color>
+    <color name="indigo">#4B0082</color>
+    <color name="royalPurple">#7851A9</color>
+    <color name="yellow">#FFF200</color>
     <color name="disable_foreground_grey">#42221f1f</color>
     <color name="disable_thumb_grey">#1c000000</color>
     <color name="enable_thumb_green">#46bdbf</color>
