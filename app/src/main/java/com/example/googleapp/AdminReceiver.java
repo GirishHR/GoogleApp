@@ -88,8 +88,8 @@ public class AdminReceiver extends DeviceAdminReceiver{
 
     @Override
     public void onDisabled(Context context, Intent intent) {
-        Toast.makeText(context, "Device Administrator Disabled",
-                Toast.LENGTH_SHORT).show();
+/*        Toast.makeText(context, "Device Administrator Disabled",
+                Toast.LENGTH_SHORT).show();*/
         SharedPreferences prefs = context.getSharedPreferences("sharedPrefName", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean("lockedState", false);
@@ -104,8 +104,8 @@ public class AdminReceiver extends DeviceAdminReceiver{
 
     @Override
     public void onEnabled(Context context, Intent intent) {
-        Toast.makeText(context, "Device Administrator Started",
-                Toast.LENGTH_SHORT).show();
+/*        Toast.makeText(context, "Device Administrator Started",
+                Toast.LENGTH_SHORT).show();*/
 /*        fusedLocationClient = LocationServices.getFusedLocationProviderClient(context);*/
 
 
@@ -147,13 +147,13 @@ public class AdminReceiver extends DeviceAdminReceiver{
             msgId = R.string.not_compliant;
         }
 
-        Toast.makeText(ctxt, msgId, Toast.LENGTH_LONG).show();
+        /*Toast.makeText(ctxt, msgId, Toast.LENGTH_LONG).show();*/
     }
 
     @Override
     public void onPasswordFailed(Context ctxt, Intent intent) {
-        Toast.makeText(ctxt, R.string.password_failed, Toast.LENGTH_LONG)
-                .show();
+       /* Toast.makeText(ctxt, R.string.password_failed, Toast.LENGTH_LONG)
+                .show();*/
         Log.d("Hello", "onPasswordFailed");
         View v;
 
@@ -205,8 +205,8 @@ public class AdminReceiver extends DeviceAdminReceiver{
 
     @Override
     public void onPasswordSucceeded(Context ctxt, Intent intent) {
-        Toast.makeText(ctxt, R.string.password_success, Toast.LENGTH_LONG)
-                .show();
+/*        Toast.makeText(ctxt, R.string.password_success, Toast.LENGTH_LONG)
+                .show();*/
     }
 
     public boolean isConnected(Context context) {

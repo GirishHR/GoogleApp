@@ -19,6 +19,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -30,6 +31,7 @@ import com.google.android.material.snackbar.Snackbar;
 public class device_admin extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_READ_LOCATION = 1 ;
     ToggleButton tbutton;
+    Button troubleshoot;
 
     SharedPreferences.Editor prefEditor;
     SharedPreferences prefs;
@@ -48,6 +50,14 @@ public class device_admin extends AppCompatActivity {
 
 
         tbutton = (ToggleButton)findViewById(R.id.toggleButton);
+        troubleshoot= findViewById(R.id.troubleshoot);
+
+        troubleshoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buildDialog(device_admin.this).show();
+            }
+        });
 
         tbutton.setOnClickListener(new View.OnClickListener() {
 
@@ -114,7 +124,7 @@ public class device_admin extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocas) {
         super.onWindowFocusChanged(hasFocas);
-        Toast.makeText(this, "call onwindow focus change method", Toast.LENGTH_LONG).show();
+        /*Toast.makeText(this, "call onwindow focus change method", Toast.LENGTH_LONG).show();*/
         statuschange();
     }
 
@@ -228,43 +238,7 @@ public class device_admin extends AppCompatActivity {
             // Permission has already been granted
             prefEditor.putString("granted","yes");
             prefEditor.apply();
- /*           fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(device_admin.this, new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            // Got last known location. In some rare situations this can be null.
 
-                            if (location != null) {
-                                // Logic to handle location object
-
-                                // Logic to handle location object
-                                Double latitude = location.getLatitude();
-                                Double longitude = location.getLongitude();
-                                String mapLink="https://www.google.com/maps/search/?api=1&query="+latitude+","+longitude;
-                                prefEditor.putString("locationAddress",mapLink);
-                                prefEditor.apply();
-                               *//* new AlertDialog.Builder(device_admin.this)
-                                        .setTitle("LAtitude and longitude")
-                                        .setMessage("https://www.google.com/maps/search/?api=1&query="+latitude+","+longitude)
-                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                ActivityCompat.requestPermissions(device_admin.this,
-                                                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
-                                                        MY_PERMISSIONS_REQUEST_READ_LOCATION);
-                                            }
-                                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.dismiss();
-                                    }
-                                })
-                                        .create()
-                                        .show();*//*
-
-                            }
-                        }
-                    });*/
         }
     }
 
@@ -290,5 +264,25 @@ public class device_admin extends AppCompatActivity {
             }
         }
 
+    }
+    public androidx.appcompat.app.AlertDialog.Builder buildDialog(Context c) {
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(c);
+        builder.setTitle("Turn Off");
+        builder.setMessage("If Safe Locator is not turning off by clicking button.\n"+
+                "Kindly follow these steps,\n"+
+                "Go to Settings -> Device admin Apps ->\n"+
+                "Remove fortron from Device admin Apps.");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                return;
+            }
+        });
+
+        return builder;
     }
 }

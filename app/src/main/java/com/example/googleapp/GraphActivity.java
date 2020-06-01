@@ -27,6 +27,10 @@ import java.util.ArrayList;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+        final LoadingDialog loadingDialog= new LoadingDialog(GraphActivity.this);
+        loadingDialog.startLoadingDialog();
+
         final String[] Inches= new String[43];
         final int[] Men= new int[44];
         final float[] Meters= new float[44];
@@ -122,6 +126,7 @@ import java.util.ArrayList;
                     LineData data = new LineData(dataSets);
                     mpLineChart[0].setData(data);
                     mpLineChart[0].invalidate();
+                    loadingDialog.dismissDialog();
 
                 }
             }

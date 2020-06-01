@@ -83,6 +83,7 @@ public class FailVerifcation extends AppCompatActivity {
         backPressedTime = System.currentTimeMillis();
     }
     public void logout() {
+
         FirebaseAuth.getInstance().signOut();//logout
         /*  finish()*/;
 
